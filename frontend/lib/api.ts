@@ -26,6 +26,31 @@ async function fetchAPI(query = "", { variables }: Record<string, any> = {}) {
   return json.data;
 }
 
+export const updateTestLikeMutation = async (input: { clientMutationId?: string, likeCount: number, postId: number }) => {
+  console.log('input', input)
+
+  const data = await fetchAPI(
+    `
+    mutation UpdateTestLike($input: UpdateTestLikeInput!) {
+      updateTestLike(input: $input) {
+        clientMutationId
+        post {
+          id
+          testLike
+          postId
+        }
+      }
+    }`,
+    {
+      variables: { input },
+    },
+  );
+  return { 
+    clientMutationId: data.clientMutationId, 
+    post: data.post 
+  };
+}
+
 export async function getPreviewPost(id, idType = "DATABASE_ID") {
   const data = await fetchAPI(
     `
@@ -148,6 +173,8 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
           }
         }
       }
+      testLike
+      postId
     }
     query PostBySlug($id: ID!, $idType: PostIdType!) {
       post(id: $id, idType: $idType) {

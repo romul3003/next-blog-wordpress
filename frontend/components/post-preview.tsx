@@ -10,6 +10,7 @@ export default function PostPreview({
   excerpt,
   author,
   slug,
+  testLike
 }) {
   return (
     <div>
@@ -33,6 +34,7 @@ export default function PostPreview({
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <Avatar author={author} />
+      <div className='mt-2'> Likes: {testLike}</div>
     </div>
   );
 }
