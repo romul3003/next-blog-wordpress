@@ -17,6 +17,7 @@ export default function MoreStories({ posts }) {
             slug={node.slug}
             excerpt={node.excerpt}
             testLike={node.testLike}
+            postId={node.postId}
           />
         ))}
       </div>

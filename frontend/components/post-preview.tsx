@@ -2,6 +2,7 @@ import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
+import LikeButton from './LikeButton';
 
 export default function PostPreview({
   title,
@@ -10,7 +11,8 @@ export default function PostPreview({
   excerpt,
   author,
   slug,
-  testLike
+  testLike,
+  postId
 }) {
   return (
     <div>
@@ -34,7 +36,9 @@ export default function PostPreview({
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <Avatar author={author} />
-      <div className='mt-2'> Likes: {testLike}</div>
+      <div className='mt-2'>
+        <LikeButton likeCount={testLike} postId={postId}/>
+      </div>
     </div>
   );
 }

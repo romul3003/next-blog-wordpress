@@ -50,8 +50,7 @@ export default function Post({ post, posts, preview }) {
               />
               <PostBody content={post.content} />
               <div className="flex justify-between items-center max-w-2xl mx-auto">
-                <LikeButton likeCount={post.testLike} postId={post.postId}>Like</LikeButton>
-                Likes: {post.testLike}
+                <LikeButton likeCount={post.testLike} postId={post.postId} />
               </div>
               <footer>
                 {post.tags.edges.length > 0 && <Tags tags={post.tags} />}
