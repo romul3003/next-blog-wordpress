@@ -1,5 +1,4 @@
-const url = "http://localhost:8000/index.php?graphql"
-const API_URL = process.env.WORDPRESS_API_URL || url;
+const API_URL = process.env.WORDPRESS_API_URL || process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
 
 async function fetchAPI(query = "", { variables }: Record<string, any> = {}) {
   const headers = { "Content-Type": "application/json" };
@@ -27,28 +26,37 @@ async function fetchAPI(query = "", { variables }: Record<string, any> = {}) {
   return json.data;
 }
 
-export const updateTestLikeMutation = async (input: { clientMutationId?: string, likeCount: number, postId: number }) => {
-  console.log('input', input)
-
+export const updateTestLikeMutation = async ({
+  likeCount,
+  postId,
+  clientMutationId
+}: { 
+  clientMutationId?: string, 
+  likeCount: number, 
+  postId: number,
+}) => {
   const data = await fetchAPI(
     `
-    mutation UpdateTestLike($input: UpdateTestLikeInput!) {
-      updateTestLike(input: $input) {
+    mutation UpdateTestLike($postId: ID!, $likeCount: Int!, $clientMutationId: String  ) {
+      updateTestLike(input: {postId: $postId, likeCount: $likeCount, clientMutationId: $clientMutationId}) {
         clientMutationId
         post {
-          id
           testLike
-          postId
         }
       }
     }`,
     {
-      variables: { input },
+      variables: {
+        postId,
+        likeCount,
+        clientMutationId,
+      },
     },
   );
+
   return { 
-    clientMutationId: data.clientMutationId, 
-    post: data.post 
+    clientMutationId: data.updateTestLike.clientMutationId, 
+    testLike: data.updateTestLike.post.testLike,
   };
 }
 

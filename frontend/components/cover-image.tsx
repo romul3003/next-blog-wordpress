@@ -10,19 +10,26 @@ interface Props {
     };
   };
   slug?: string;
+  hasAspectRatio?: boolean
 }
 
-export default function CoverImage({ title, coverImage, slug }: Props) {
+export default function CoverImage({ title, coverImage, slug, hasAspectRatio }: Props) {
+  const imageProps = hasAspectRatio ? { fill: true } : {width: 2000, height: 1000}
+
   const image = (
-    <Image
-      width={2000}
-      height={1000}
-      alt={`Cover Image for ${title}`}
-      src={coverImage?.node.sourceUrl}
-      className={cn("shadow-small", {
-        "hover:shadow-medium transition-shadow duration-200": slug,
-      })}
-    />
+    <div className={cn({
+      "relative aspect-[3/2]": hasAspectRatio
+    })}>
+      <Image
+        {...imageProps}
+        alt={`Cover Image for ${title}`}
+        src={coverImage?.node.sourceUrl}
+        className={cn("shadow-small", {
+          "hover:shadow-medium transition-shadow duration-200 object-cover": slug,
+          "object-cover": hasAspectRatio,
+        })}
+      />
+    </div>
   );
   return (
     <div className="sm:mx-0">
