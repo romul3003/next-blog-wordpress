@@ -118,6 +118,8 @@ export async function getAllPostsForHome(preview) {
                 }
               }
             }
+            testLike
+            postId
           }
         }
       }

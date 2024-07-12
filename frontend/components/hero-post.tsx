@@ -2,6 +2,7 @@ import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
+import LikeButton from './LikeButton';
 
 export default function HeroPost({
   title,
@@ -10,6 +11,8 @@ export default function HeroPost({
   excerpt,
   author,
   slug,
+  testLike,
+  postId,
 }) {
   return (
     <section>
@@ -31,6 +34,9 @@ export default function HeroPost({
             <Date dateString={date} />
           </div>
         </div>
+        <div className="flex justify-between items-center max-w-2xl mx-auto">
+        <LikeButton likeCount={testLike} postId={postId} clientMutationId={`${testLike}`} />
+      </div>
         <div>
           <div
             className="text-lg leading-relaxed mb-4"
